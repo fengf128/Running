@@ -608,27 +608,14 @@ GameObject:
   - component: {fileID: 654875024}
   - component: {fileID: 654875023}
   - component: {fileID: 654875022}
-  - component: {fileID: 654875021}
+  - component: {fileID: 654875026}
   m_Layer: 0
-  m_Name: TestBoxB
+  m_Name: WaterPickupB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &654875021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 654875020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 632c1552e8d41e446b83f5d884ce0432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionName: "\u8FDC\u8865\u7ED9\u7BB1"
 --- !u!65 &654875022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -715,6 +702,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &654875026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654875020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57395d69cf8b39546b8b790386ae5c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 90dda8da43b5c62459efff923ac3907c, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,27 +1116,14 @@ GameObject:
   - component: {fileID: 1432246265}
   - component: {fileID: 1432246264}
   - component: {fileID: 1432246263}
-  - component: {fileID: 1432246262}
+  - component: {fileID: 1432246267}
   m_Layer: 0
-  m_Name: TestBoxA
+  m_Name: WaterPickupA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1432246262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432246261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 632c1552e8d41e446b83f5d884ce0432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionName: "\u8FD1\u8865\u7ED9\u7BB1"
 --- !u!65 &1432246263
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1223,6 +1210,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1432246267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432246261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57395d69cf8b39546b8b790386ae5c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 90dda8da43b5c62459efff923ac3907c, type: 2}
 --- !u!1 &1735372856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1475,7 @@ GameObject:
   - component: {fileID: 2050896310}
   - component: {fileID: 2050896311}
   - component: {fileID: 2050896312}
+  - component: {fileID: 2050896313}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1634,6 +1635,19 @@ MonoBehaviour:
   interactionLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2050896313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050896304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8274f7ebd770f734f9cbf8568e493985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
