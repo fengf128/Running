@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 public sealed class PlayerShooter : MonoBehaviour
 {
     [SerializeField] private ProjectilePool projectilePool;
@@ -7,6 +8,12 @@ public sealed class PlayerShooter : MonoBehaviour
     [SerializeField, Min(0f)] private float fireCooldown = 0.15f;
 
     private float nextFireTime;
+    private Health ownerHealth;
+
+    private void Awake()
+    {
+        ownerHealth = GetComponent<Health>();
+    }
 
     public void TryFire()
     {
@@ -20,7 +27,7 @@ public sealed class PlayerShooter : MonoBehaviour
             return;
         }
 
-        projectilePool.Spawn(firePoint.position, firePoint.rotation);
+        projectilePool.Spawn(firePoint.position, firePoint.rotation, ownerHealth);
         nextFireTime = Time.time + fireCooldown;
     }
 }

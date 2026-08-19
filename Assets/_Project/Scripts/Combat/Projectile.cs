@@ -8,6 +8,7 @@ public sealed class Projectile : MonoBehaviour
     [SerializeField, Min(0f)] private float damage = 10f;
 
     private ProjectilePool owner;
+    private Health sourceHealth;
     private Rigidbody cachedRigidbody;
     private float remainingLifetime;
     private bool isLaunched;
@@ -22,9 +23,10 @@ public sealed class Projectile : MonoBehaviour
         owner = projectilePool;
     }
 
-    public void Launch(Vector3 position, Quaternion rotation)
+    public void Launch(Vector3 position, Quaternion rotation, Health projectileSource)
     {
         transform.SetPositionAndRotation(position, rotation);
+        sourceHealth = projectileSource;
         remainingLifetime = lifetime;
         isLaunched = true;
         gameObject.SetActive(true);
@@ -49,12 +51,17 @@ public sealed class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isLaunched || other.CompareTag("Player"))
+        if (!isLaunched)
         {
             return;
         }
 
         Health targetHealth = other.GetComponentInParent<Health>();
+        if (targetHealth == sourceHealth)
+        {
+            return;
+        }
+
         if (targetHealth != null)
         {
             targetHealth.TakeDamage(damage);
@@ -66,6 +73,7 @@ public sealed class Projectile : MonoBehaviour
     private void ReturnToPool()
     {
         isLaunched = false;
+        sourceHealth = null;
 
         if (owner == null)
         {

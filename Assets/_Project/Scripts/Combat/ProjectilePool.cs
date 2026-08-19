@@ -22,7 +22,7 @@ public sealed class ProjectilePool : MonoBehaviour
         }
     }
 
-    public Projectile Spawn(Vector3 position, Quaternion rotation)
+    public Projectile Spawn(Vector3 position, Quaternion rotation, Health projectileSource)
     {
         if (projectilePrefab == null)
         {
@@ -33,7 +33,7 @@ public sealed class ProjectilePool : MonoBehaviour
             ? availableProjectiles.Dequeue()
             : CreateProjectile();
 
-        projectile.Launch(position, rotation);
+        projectile.Launch(position, rotation, projectileSource);
         return projectile;
     }
 
