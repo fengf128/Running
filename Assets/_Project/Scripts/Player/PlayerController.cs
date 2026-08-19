@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController), typeof(PlayerShooter))]
+[RequireComponent(typeof(CharacterController), typeof(PlayerShooter), typeof(PlayerInteractor))]
 public sealed class PlayerController : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
@@ -10,12 +10,14 @@ public sealed class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private PlayerInputActions inputActions;
     private PlayerShooter shooter;
+    private PlayerInteractor interactor;
     private float verticalVelocity;
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         shooter = GetComponent<PlayerShooter>();
+        interactor = GetComponent<PlayerInteractor>();
         inputActions = new PlayerInputActions();
     }
 
@@ -53,6 +55,7 @@ public sealed class PlayerController : MonoBehaviour
 
         UpdateAim();
         UpdateFire();
+        UpdateInteract();
     }
 
     private void UpdateAim()
@@ -93,6 +96,19 @@ public sealed class PlayerController : MonoBehaviour
         if (inputActions.Gameplay.Fire.WasPressedThisFrame())
         {
             shooter.TryFire();
+        }
+    }
+
+    private void UpdateInteract()
+    {
+        if (interactor == null)
+        {
+            return;
+        }
+
+        if (inputActions.Gameplay.Interact.WasPressedThisFrame())
+        {
+            interactor.TryInteract();
         }
     }
 }
