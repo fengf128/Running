@@ -1,0 +1,78 @@
+using UnityEngine;
+
+[RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
+public sealed class Projectile : MonoBehaviour
+{
+    [SerializeField, Min(0f)] private float speed = 18f;
+    [SerializeField, Min(0f)] private float lifetime = 2f;
+    [SerializeField, Min(0f)] private float damage = 10f;
+
+    private ProjectilePool owner;
+    private Rigidbody cachedRigidbody;
+    private float remainingLifetime;
+    private bool isLaunched;
+
+    private void Awake()
+    {
+        cachedRigidbody = GetComponent<Rigidbody>();
+    }
+
+    public void Initialize(ProjectilePool projectilePool)
+    {
+        owner = projectilePool;
+    }
+
+    public void Launch(Vector3 position, Quaternion rotation)
+    {
+        transform.SetPositionAndRotation(position, rotation);
+        remainingLifetime = lifetime;
+        isLaunched = true;
+        gameObject.SetActive(true);
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isLaunched)
+        {
+            return;
+        }
+
+        Vector3 displacement = transform.forward * speed * Time.fixedDeltaTime;
+        cachedRigidbody.MovePosition(cachedRigidbody.position + displacement);
+
+        remainingLifetime -= Time.fixedDeltaTime;
+        if (remainingLifetime <= 0f)
+        {
+            ReturnToPool();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isLaunched || other.CompareTag("Player"))
+        {
+            return;
+        }
+
+        Health targetHealth = other.GetComponentInParent<Health>();
+        if (targetHealth != null)
+        {
+            targetHealth.TakeDamage(damage);
+        }
+
+        ReturnToPool();
+    }
+
+    private void ReturnToPool()
+    {
+        isLaunched = false;
+
+        if (owner == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        owner.Release(this);
+    }
+}

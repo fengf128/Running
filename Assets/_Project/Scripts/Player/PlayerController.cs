@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(PlayerShooter))]
 public sealed class PlayerController : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
@@ -9,11 +9,13 @@ public sealed class PlayerController : MonoBehaviour
 
     private CharacterController characterController;
     private PlayerInputActions inputActions;
+    private PlayerShooter shooter;
     private float verticalVelocity;
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        shooter = GetComponent<PlayerShooter>();
         inputActions = new PlayerInputActions();
     }
 
@@ -50,6 +52,7 @@ public sealed class PlayerController : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
 
         UpdateAim();
+        UpdateFire();
     }
 
     private void UpdateAim()
@@ -78,5 +81,18 @@ public sealed class PlayerController : MonoBehaviour
         }
 
         transform.forward = aimDirection.normalized;
+    }
+
+    private void UpdateFire()
+    {
+        if (shooter == null)
+        {
+            return;
+        }
+
+        if (inputActions.Gameplay.Fire.WasPressedThisFrame())
+        {
+            shooter.TryFire();
+        }
     }
 }
