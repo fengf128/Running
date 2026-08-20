@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public sealed class PlayerInventory : MonoBehaviour
     private const int SlotCount = 6;
 
     [SerializeField] private InventorySlot[] slots;
+
+    public event Action InventoryChanged;
 
     public IReadOnlyList<InventorySlot> Slots => slots;
 
@@ -31,6 +34,7 @@ public sealed class PlayerInventory : MonoBehaviour
             if (slots[i].TryStack(itemData))
             {
                 LogPickup(itemData, i);
+                InventoryChanged?.Invoke();
                 return true;
             }
         }
@@ -40,6 +44,7 @@ public sealed class PlayerInventory : MonoBehaviour
             if (slots[i].TryFill(itemData))
             {
                 LogPickup(itemData, i);
+                InventoryChanged?.Invoke();
                 return true;
             }
         }
