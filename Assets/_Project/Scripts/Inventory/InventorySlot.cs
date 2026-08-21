@@ -32,4 +32,21 @@ public sealed class InventorySlot
         quantity = 1;
         return true;
     }
+
+    public bool TryConsumeOne()
+    {
+        if (IsEmpty)
+        {
+            return false;
+        }
+
+        quantity--;
+
+        if (quantity == 0)
+        {
+            item = null;
+        }
+
+        return true;
+    }
 }

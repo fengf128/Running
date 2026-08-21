@@ -62,6 +62,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSlot1"",
+                    ""type"": ""Button"",
+                    ""id"": ""fdeec8b7-6579-4e56-a412-8ba5e10308b9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSlot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""4def95cb-58c2-4928-acdc-8c98e8db6af9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSlot3"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5312520-76b5-498c-b2db-1e5e62521dd4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSlot4"",
+                    ""type"": ""Button"",
+                    ""id"": ""0cd45001-2f1d-4ed4-814e-d15fafd798b1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSlot5"",
+                    ""type"": ""Button"",
+                    ""id"": ""56a15aef-2e5c-4b75-9d14-87f71f12088d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSlot6"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d99c12f-75dc-4bfd-8a48-155e0e58f2f3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +206,72 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2004658-8212-4452-8a82-0ca529f6429c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSlot1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7bd77bd-2c42-4b4c-a31f-73dbeb7982a4"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSlot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7adad8e8-b92a-4299-9cda-990bd03cf083"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSlot3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4fd5a11f-641b-497e-ad0b-87ffc4d50648"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSlot4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3d7be72-800d-4e90-b3b1-65b7e96d5293"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSlot5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca21e2b3-6c46-45ac-8b67-4125cd565b94"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSlot6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +284,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Aim = m_Gameplay.FindAction("Aim", throwIfNotFound: true);
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
+        m_Gameplay_UseSlot1 = m_Gameplay.FindAction("UseSlot1", throwIfNotFound: true);
+        m_Gameplay_UseSlot2 = m_Gameplay.FindAction("UseSlot2", throwIfNotFound: true);
+        m_Gameplay_UseSlot3 = m_Gameplay.FindAction("UseSlot3", throwIfNotFound: true);
+        m_Gameplay_UseSlot4 = m_Gameplay.FindAction("UseSlot4", throwIfNotFound: true);
+        m_Gameplay_UseSlot5 = m_Gameplay.FindAction("UseSlot5", throwIfNotFound: true);
+        m_Gameplay_UseSlot6 = m_Gameplay.FindAction("UseSlot6", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -234,6 +360,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Aim;
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_Interact;
+    private readonly InputAction m_Gameplay_UseSlot1;
+    private readonly InputAction m_Gameplay_UseSlot2;
+    private readonly InputAction m_Gameplay_UseSlot3;
+    private readonly InputAction m_Gameplay_UseSlot4;
+    private readonly InputAction m_Gameplay_UseSlot5;
+    private readonly InputAction m_Gameplay_UseSlot6;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -242,6 +374,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Gameplay_Aim;
         public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
+        public InputAction @UseSlot1 => m_Wrapper.m_Gameplay_UseSlot1;
+        public InputAction @UseSlot2 => m_Wrapper.m_Gameplay_UseSlot2;
+        public InputAction @UseSlot3 => m_Wrapper.m_Gameplay_UseSlot3;
+        public InputAction @UseSlot4 => m_Wrapper.m_Gameplay_UseSlot4;
+        public InputAction @UseSlot5 => m_Wrapper.m_Gameplay_UseSlot5;
+        public InputAction @UseSlot6 => m_Wrapper.m_Gameplay_UseSlot6;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -263,6 +401,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @UseSlot1.started += instance.OnUseSlot1;
+            @UseSlot1.performed += instance.OnUseSlot1;
+            @UseSlot1.canceled += instance.OnUseSlot1;
+            @UseSlot2.started += instance.OnUseSlot2;
+            @UseSlot2.performed += instance.OnUseSlot2;
+            @UseSlot2.canceled += instance.OnUseSlot2;
+            @UseSlot3.started += instance.OnUseSlot3;
+            @UseSlot3.performed += instance.OnUseSlot3;
+            @UseSlot3.canceled += instance.OnUseSlot3;
+            @UseSlot4.started += instance.OnUseSlot4;
+            @UseSlot4.performed += instance.OnUseSlot4;
+            @UseSlot4.canceled += instance.OnUseSlot4;
+            @UseSlot5.started += instance.OnUseSlot5;
+            @UseSlot5.performed += instance.OnUseSlot5;
+            @UseSlot5.canceled += instance.OnUseSlot5;
+            @UseSlot6.started += instance.OnUseSlot6;
+            @UseSlot6.performed += instance.OnUseSlot6;
+            @UseSlot6.canceled += instance.OnUseSlot6;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -279,6 +435,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @UseSlot1.started -= instance.OnUseSlot1;
+            @UseSlot1.performed -= instance.OnUseSlot1;
+            @UseSlot1.canceled -= instance.OnUseSlot1;
+            @UseSlot2.started -= instance.OnUseSlot2;
+            @UseSlot2.performed -= instance.OnUseSlot2;
+            @UseSlot2.canceled -= instance.OnUseSlot2;
+            @UseSlot3.started -= instance.OnUseSlot3;
+            @UseSlot3.performed -= instance.OnUseSlot3;
+            @UseSlot3.canceled -= instance.OnUseSlot3;
+            @UseSlot4.started -= instance.OnUseSlot4;
+            @UseSlot4.performed -= instance.OnUseSlot4;
+            @UseSlot4.canceled -= instance.OnUseSlot4;
+            @UseSlot5.started -= instance.OnUseSlot5;
+            @UseSlot5.performed -= instance.OnUseSlot5;
+            @UseSlot5.canceled -= instance.OnUseSlot5;
+            @UseSlot6.started -= instance.OnUseSlot6;
+            @UseSlot6.performed -= instance.OnUseSlot6;
+            @UseSlot6.canceled -= instance.OnUseSlot6;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -302,5 +476,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnUseSlot1(InputAction.CallbackContext context);
+        void OnUseSlot2(InputAction.CallbackContext context);
+        void OnUseSlot3(InputAction.CallbackContext context);
+        void OnUseSlot4(InputAction.CallbackContext context);
+        void OnUseSlot5(InputAction.CallbackContext context);
+        void OnUseSlot6(InputAction.CallbackContext context);
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerShooter), typeof(PlayerInteractor))]
+[RequireComponent(typeof(PlayerItemUser))]
 public sealed class PlayerController : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
@@ -11,6 +12,7 @@ public sealed class PlayerController : MonoBehaviour
     private PlayerInputActions inputActions;
     private PlayerShooter shooter;
     private PlayerInteractor interactor;
+    private PlayerItemUser itemUser;
     private float verticalVelocity;
 
     private void Awake()
@@ -18,6 +20,7 @@ public sealed class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         shooter = GetComponent<PlayerShooter>();
         interactor = GetComponent<PlayerInteractor>();
+        itemUser = GetComponent<PlayerItemUser>();
         inputActions = new PlayerInputActions();
     }
 
@@ -56,6 +59,7 @@ public sealed class PlayerController : MonoBehaviour
         UpdateAim();
         UpdateFire();
         UpdateInteract();
+        UpdateUseItem();
     }
 
     private void UpdateAim()
@@ -109,6 +113,39 @@ public sealed class PlayerController : MonoBehaviour
         if (inputActions.Gameplay.Interact.WasPressedThisFrame())
         {
             interactor.TryInteract();
+        }
+    }
+
+    private void UpdateUseItem()
+    {
+        if (itemUser == null)
+        {
+            return;
+        }
+
+        if (inputActions.Gameplay.UseSlot1.WasPressedThisFrame())
+        {
+            itemUser.TryUseSlot(0);
+        }
+        else if (inputActions.Gameplay.UseSlot2.WasPressedThisFrame())
+        {
+            itemUser.TryUseSlot(1);
+        }
+        else if (inputActions.Gameplay.UseSlot3.WasPressedThisFrame())
+        {
+            itemUser.TryUseSlot(2);
+        }
+        else if (inputActions.Gameplay.UseSlot4.WasPressedThisFrame())
+        {
+            itemUser.TryUseSlot(3);
+        }
+        else if (inputActions.Gameplay.UseSlot5.WasPressedThisFrame())
+        {
+            itemUser.TryUseSlot(4);
+        }
+        else if (inputActions.Gameplay.UseSlot6.WasPressedThisFrame())
+        {
+            itemUser.TryUseSlot(5);
         }
     }
 }

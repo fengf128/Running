@@ -53,6 +53,41 @@ public sealed class PlayerInventory : MonoBehaviour
         return false;
     }
 
+    public bool TryConsume(int slotIndex)
+    {
+        if (slots == null || slotIndex < 0 || slotIndex >= slots.Length)
+        {
+            return false;
+        }
+
+        if (!slots[slotIndex].TryConsumeOne())
+        {
+            return false;
+        }
+
+        InventoryChanged?.Invoke();
+        return true;
+    }
+
+    public bool TryGetItem(int slotIndex, out ItemData item)
+    {
+        item = null;
+
+        if (slots == null || slotIndex < 0 || slotIndex >= slots.Length)
+        {
+            return false;
+        }
+
+        InventorySlot slot = slots[slotIndex];
+        if (slot == null || slot.IsEmpty)
+        {
+            return false;
+        }
+
+        item = slot.Item;
+        return true;
+    }
+
     private void LogPickup(ItemData itemData, int slotIndex)
     {
         InventorySlot slot = slots[slotIndex];
