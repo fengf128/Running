@@ -3937,6 +3937,7 @@ GameObject:
   - component: {fileID: 2050896313}
   - component: {fileID: 2050896314}
   - component: {fileID: 2050896315}
+  - component: {fileID: 2050896316}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -4136,6 +4137,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9032c7ae474895e448316307a9132c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2050896316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050896304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1ab226847fd7f42931781f4e3f8414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knownItems:
+  - {fileID: 11400000, guid: 9d72e24388ed15d459812dbe70900ee7, type: 2}
+  - {fileID: 11400000, guid: a2b92c962cf6aae439b2246adfd32c35, type: 2}
+  - {fileID: 11400000, guid: 90dda8da43b5c62459efff923ac3907c, type: 2}
+  saveFileName: player-save.json
 --- !u!1 &2113781916
 GameObject:
   m_ObjectHideFlags: 0

@@ -108,6 +108,26 @@ public sealed class PlayerInventory : MonoBehaviour
         return false;
     }
 
+    public bool RestoreFromSave(ItemData[] savedItems, int[] savedQuantities)
+    {
+        if (slots == null ||
+            savedItems == null ||
+            savedQuantities == null ||
+            savedItems.Length != slots.Length ||
+            savedQuantities.Length != slots.Length)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].RestoreFromSave(savedItems[i], savedQuantities[i]);
+        }
+
+        InventoryChanged?.Invoke();
+        return true;
+    }
+
     private void LogPickup(ItemData itemData, int slotIndex)
     {
         InventorySlot slot = slots[slotIndex];

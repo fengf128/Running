@@ -116,6 +116,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SaveGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""118663ce-e393-4569-a1a7-f3b241bcea1f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LoadGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""d8d4c0ff-632b-4e7c-9b17-d1fc4eeecb7c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +290,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""UseSlot6"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73cf89b9-8e2d-452d-bfd3-3e34f0a7a998"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SaveGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22f32be5-32f3-4c65-9735-d0291e8428d5"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LoadGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +330,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_UseSlot4 = m_Gameplay.FindAction("UseSlot4", throwIfNotFound: true);
         m_Gameplay_UseSlot5 = m_Gameplay.FindAction("UseSlot5", throwIfNotFound: true);
         m_Gameplay_UseSlot6 = m_Gameplay.FindAction("UseSlot6", throwIfNotFound: true);
+        m_Gameplay_SaveGame = m_Gameplay.FindAction("SaveGame", throwIfNotFound: true);
+        m_Gameplay_LoadGame = m_Gameplay.FindAction("LoadGame", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -366,6 +408,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_UseSlot4;
     private readonly InputAction m_Gameplay_UseSlot5;
     private readonly InputAction m_Gameplay_UseSlot6;
+    private readonly InputAction m_Gameplay_SaveGame;
+    private readonly InputAction m_Gameplay_LoadGame;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -380,6 +424,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @UseSlot4 => m_Wrapper.m_Gameplay_UseSlot4;
         public InputAction @UseSlot5 => m_Wrapper.m_Gameplay_UseSlot5;
         public InputAction @UseSlot6 => m_Wrapper.m_Gameplay_UseSlot6;
+        public InputAction @SaveGame => m_Wrapper.m_Gameplay_SaveGame;
+        public InputAction @LoadGame => m_Wrapper.m_Gameplay_LoadGame;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -419,6 +465,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @UseSlot6.started += instance.OnUseSlot6;
             @UseSlot6.performed += instance.OnUseSlot6;
             @UseSlot6.canceled += instance.OnUseSlot6;
+            @SaveGame.started += instance.OnSaveGame;
+            @SaveGame.performed += instance.OnSaveGame;
+            @SaveGame.canceled += instance.OnSaveGame;
+            @LoadGame.started += instance.OnLoadGame;
+            @LoadGame.performed += instance.OnLoadGame;
+            @LoadGame.canceled += instance.OnLoadGame;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -453,6 +505,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @UseSlot6.started -= instance.OnUseSlot6;
             @UseSlot6.performed -= instance.OnUseSlot6;
             @UseSlot6.canceled -= instance.OnUseSlot6;
+            @SaveGame.started -= instance.OnSaveGame;
+            @SaveGame.performed -= instance.OnSaveGame;
+            @SaveGame.canceled -= instance.OnSaveGame;
+            @LoadGame.started -= instance.OnLoadGame;
+            @LoadGame.performed -= instance.OnLoadGame;
+            @LoadGame.canceled -= instance.OnLoadGame;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -482,5 +540,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnUseSlot4(InputAction.CallbackContext context);
         void OnUseSlot5(InputAction.CallbackContext context);
         void OnUseSlot6(InputAction.CallbackContext context);
+        void OnSaveGame(InputAction.CallbackContext context);
+        void OnLoadGame(InputAction.CallbackContext context);
     }
 }

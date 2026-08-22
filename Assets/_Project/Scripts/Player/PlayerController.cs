@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerShooter), typeof(PlayerInteractor))]
 [RequireComponent(typeof(PlayerItemUser))]
+[RequireComponent(typeof(GameSaveSystem))]
 public sealed class PlayerController : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
@@ -13,6 +14,7 @@ public sealed class PlayerController : MonoBehaviour
     private PlayerShooter shooter;
     private PlayerInteractor interactor;
     private PlayerItemUser itemUser;
+    private GameSaveSystem saveSystem;
     private float verticalVelocity;
 
     private void Awake()
@@ -21,6 +23,7 @@ public sealed class PlayerController : MonoBehaviour
         shooter = GetComponent<PlayerShooter>();
         interactor = GetComponent<PlayerInteractor>();
         itemUser = GetComponent<PlayerItemUser>();
+        saveSystem = GetComponent<GameSaveSystem>();
         inputActions = new PlayerInputActions();
     }
 
@@ -60,6 +63,7 @@ public sealed class PlayerController : MonoBehaviour
         UpdateFire();
         UpdateInteract();
         UpdateUseItem();
+        UpdateSaveLoad();
     }
 
     private void UpdateAim()
@@ -146,6 +150,23 @@ public sealed class PlayerController : MonoBehaviour
         else if (inputActions.Gameplay.UseSlot6.WasPressedThisFrame())
         {
             itemUser.TryUseSlot(5);
+        }
+    }
+
+    private void UpdateSaveLoad()
+    {
+        if (saveSystem == null)
+        {
+            return;
+        }
+
+        if (inputActions.Gameplay.SaveGame.WasPressedThisFrame())
+        {
+            saveSystem.SaveGame();
+        }
+        else if (inputActions.Gameplay.LoadGame.WasPressedThisFrame())
+        {
+            saveSystem.LoadGame();
         }
     }
 }

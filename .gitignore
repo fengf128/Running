@@ -8,6 +8,7 @@
 /[Uu]ser[Ss]ettings/
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
+/SaveData/
 
 # IDE-generated files
 /.vs/
@@ -45,4 +46,3 @@ Desktop.ini
 # Unity Version Control / Plastic metadata is not used by this project
 /.plastic/
 /ignore.conf
-

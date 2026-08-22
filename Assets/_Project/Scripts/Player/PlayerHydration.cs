@@ -37,4 +37,10 @@ public sealed class PlayerHydration : MonoBehaviour
         Debug.Log($"{name} Hydration: {CurrentHydration}/{maxHydration}", this);
         return true;
     }
+
+    public void RestoreFromSave(float savedHydration)
+    {
+        CurrentHydration = Mathf.Clamp(savedHydration, 0f, maxHydration);
+        Debug.Log($"{name} Hydration loaded: {CurrentHydration}/{maxHydration}", this);
+    }
 }

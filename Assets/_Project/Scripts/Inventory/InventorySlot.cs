@@ -49,4 +49,17 @@ public sealed class InventorySlot
 
         return true;
     }
+
+    public void RestoreFromSave(ItemData savedItem, int savedQuantity)
+    {
+        if (savedItem == null || savedQuantity <= 0)
+        {
+            item = null;
+            quantity = 0;
+            return;
+        }
+
+        item = savedItem;
+        quantity = Mathf.Clamp(savedQuantity, 1, savedItem.MaxStack);
+    }
 }

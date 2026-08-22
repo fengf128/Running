@@ -40,4 +40,15 @@ public sealed class Health : MonoBehaviour
         Debug.Log($"{name} HP: {CurrentHealth}/{maxHealth}", this);
         return true;
     }
+
+    public void RestoreFromSave(float savedHealth)
+    {
+        CurrentHealth = Mathf.Clamp(savedHealth, 0f, maxHealth);
+        Debug.Log($"{name} HP loaded: {CurrentHealth}/{maxHealth}", this);
+
+        if (IsDead)
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }
