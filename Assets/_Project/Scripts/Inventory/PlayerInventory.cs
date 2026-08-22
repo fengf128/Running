@@ -88,6 +88,26 @@ public sealed class PlayerInventory : MonoBehaviour
         return true;
     }
 
+    public bool HasItem(ItemData item)
+    {
+        if (item == null || slots == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            InventorySlot slot = slots[i];
+
+            if (slot != null && !slot.IsEmpty && slot.Item == item)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void LogPickup(ItemData itemData, int slotIndex)
     {
         InventorySlot slot = slots[slotIndex];
