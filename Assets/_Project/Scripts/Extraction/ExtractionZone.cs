@@ -5,6 +5,7 @@ public sealed class ExtractionZone : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemData requiredItem;
     [SerializeField] private ExtractionResultUI resultUI;
+    [SerializeField] private GameMessageUI messageUI;
 
     private bool completed;
 
@@ -32,6 +33,15 @@ public sealed class ExtractionZone : MonoBehaviour, IInteractable
 
         if (!inventory.HasItem(requiredItem))
         {
+            if (messageUI != null)
+            {
+                messageUI.Show($"缺少任务物品：{requiredItem.DisplayName}");
+            }
+            else
+            {
+                Debug.LogError("Game Message UI is not assigned.", this);
+            }
+
             Debug.Log($"Extraction failed. Missing {requiredItem.DisplayName}.", this);
             return;
         }
