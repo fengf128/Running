@@ -40,15 +40,19 @@ public sealed class PlayerStatusUI : MonoBehaviour
 
         if (currentHealth != displayedHealth)
         {
-            healthText.text =
-                $"生命：{currentHealth}/{Mathf.CeilToInt(health.MaxHealth)}";
+            healthText.SetText(
+                "生命：{0}/{1}",
+                currentHealth,
+                Mathf.CeilToInt(health.MaxHealth));
             displayedHealth = currentHealth;
         }
 
         if (currentHydration != displayedHydration)
         {
-            hydrationText.text =
-                $"饮水：{currentHydration}/{Mathf.CeilToInt(hydration.MaxHydration)}";
+            hydrationText.SetText(
+                "饮水：{0}/{1}",
+                currentHydration,
+                Mathf.CeilToInt(hydration.MaxHydration));
             displayedHydration = currentHydration;
         }
     }

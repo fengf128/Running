@@ -21,8 +21,6 @@ public sealed class Health : MonoBehaviour
         }
 
         CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
-        Debug.Log($"{name} HP: {CurrentHealth}/{maxHealth}", this);
-
         if (IsDead)
         {
             gameObject.SetActive(false);
