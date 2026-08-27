@@ -13,18 +13,21 @@ public sealed class ChaserEnemy : MonoBehaviour
     [SerializeField, Min(0f)] private float detectionRange = 12f;
     [SerializeField, Min(0f)] private float moveSpeed = 2.5f;
     [SerializeField, Min(0f)] private float stoppingDistance = 1.3f;
-    [SerializeField, Min(0f)] private float attackDamage = 10f;
-    [SerializeField, Min(0f)] private float attackCooldown = 1f;
     [SerializeField] private EnemyState currentState = EnemyState.Idle;
 
     private CharacterController characterController;
+    private IEnemyAttack attackStrategy;
     private Transform target;
     private Health targetHealth;
-    private float nextAttackTime;
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        attackStrategy = GetComponent<IEnemyAttack>();
+        if (attackStrategy == null)
+        {
+            Debug.LogError("Enemy attack component was not found.", this);
+        }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -95,7 +98,7 @@ public sealed class ChaserEnemy : MonoBehaviour
                 break;
 
             case EnemyState.Attack:
-                TryAttack();
+                attackStrategy?.TryAttack(target);
                 break;
         }
     }
@@ -106,16 +109,5 @@ public sealed class ChaserEnemy : MonoBehaviour
         Vector3 velocity = direction * moveSpeed + Vector3.down * 2f;
         characterController.Move(velocity * Time.deltaTime);
         transform.forward = direction;
-    }
-
-    private void TryAttack()
-    {
-        if (Time.time < nextAttackTime)
-        {
-            return;
-        }
-
-        targetHealth.TakeDamage(attackDamage);
-        nextAttackTime = Time.time + attackCooldown;
     }
 }

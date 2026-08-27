@@ -3,18 +3,18 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public sealed class RangedEnemy : MonoBehaviour
 {
-    [SerializeField] private ProjectilePool projectilePool;
-    [SerializeField] private Transform firePoint;
     [SerializeField, Min(0f)] private float attackRange = 12f;
-    [SerializeField, Min(0f)] private float attackCooldown = 1.5f;
 
+    private IEnemyAttack attackStrategy;
     private Transform target;
-    private Health ownerHealth;
-    private float nextAttackTime;
 
     private void Awake()
     {
-        ownerHealth = GetComponent<Health>();
+        attackStrategy = GetComponent<IEnemyAttack>();
+        if (attackStrategy == null)
+        {
+            Debug.LogError("Enemy attack component was not found.", this);
+        }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -28,7 +28,7 @@ public sealed class RangedEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (target == null || projectilePool == null || firePoint == null)
+        if (target == null || attackStrategy == null)
         {
             return;
         }
@@ -47,13 +47,6 @@ public sealed class RangedEnemy : MonoBehaviour
         }
 
         transform.forward = toTarget.normalized;
-
-        if (Time.time < nextAttackTime)
-        {
-            return;
-        }
-
-        projectilePool.Spawn(firePoint.position, firePoint.rotation, ownerHealth);
-        nextAttackTime = Time.time + attackCooldown;
+        attackStrategy.TryAttack(target);
     }
 }
