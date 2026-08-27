@@ -3,11 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController), typeof(Health))]
 public sealed class ChaserEnemy : MonoBehaviour
 {
+    private enum EnemyState
+    {
+        Idle,
+        Chase,
+        Attack
+    }
+
     [SerializeField, Min(0f)] private float detectionRange = 12f;
     [SerializeField, Min(0f)] private float moveSpeed = 2.5f;
     [SerializeField, Min(0f)] private float stoppingDistance = 1.3f;
     [SerializeField, Min(0f)] private float attackDamage = 10f;
     [SerializeField, Min(0f)] private float attackCooldown = 1f;
+    [SerializeField] private EnemyState currentState = EnemyState.Idle;
 
     private CharacterController characterController;
     private Transform target;
@@ -37,6 +45,7 @@ public sealed class ChaserEnemy : MonoBehaviour
     {
         if (target == null || targetHealth == null || targetHealth.IsDead)
         {
+            ChangeState(EnemyState.Idle);
             return;
         }
 
@@ -44,21 +53,59 @@ public sealed class ChaserEnemy : MonoBehaviour
         toTarget.y = 0f;
         float squaredDistance = toTarget.sqrMagnitude;
 
+        EnemyState nextState = DecideState(squaredDistance);
+        ChangeState(nextState);
+        ExecuteState(toTarget);
+    }
+
+    private EnemyState DecideState(float squaredDistance)
+    {
         if (squaredDistance > detectionRange * detectionRange)
         {
-            return;
+            return EnemyState.Idle;
         }
 
         if (squaredDistance > stoppingDistance * stoppingDistance)
         {
-            Vector3 direction = toTarget.normalized;
-            Vector3 velocity = direction * moveSpeed + Vector3.down * 2f;
-            characterController.Move(velocity * Time.deltaTime);
-            transform.forward = direction;
+            return EnemyState.Chase;
+        }
+
+        return EnemyState.Attack;
+    }
+
+    private void ChangeState(EnemyState nextState)
+    {
+        if (currentState == nextState)
+        {
             return;
         }
 
-        TryAttack();
+        currentState = nextState;
+    }
+
+    private void ExecuteState(Vector3 toTarget)
+    {
+        switch (currentState)
+        {
+            case EnemyState.Idle:
+                break;
+
+            case EnemyState.Chase:
+                MoveTowardsTarget(toTarget);
+                break;
+
+            case EnemyState.Attack:
+                TryAttack();
+                break;
+        }
+    }
+
+    private void MoveTowardsTarget(Vector3 toTarget)
+    {
+        Vector3 direction = toTarget.normalized;
+        Vector3 velocity = direction * moveSpeed + Vector3.down * 2f;
+        characterController.Move(velocity * Time.deltaTime);
+        transform.forward = direction;
     }
 
     private void TryAttack()
