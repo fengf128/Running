@@ -9,6 +9,7 @@ public sealed class Projectile : MonoBehaviour
 
     private ProjectilePool owner;
     private Health sourceHealth;
+    private FactionMember sourceFaction;
     private Rigidbody cachedRigidbody;
     private float remainingLifetime;
     private bool isLaunched;
@@ -27,6 +28,9 @@ public sealed class Projectile : MonoBehaviour
     {
         transform.SetPositionAndRotation(position, rotation);
         sourceHealth = projectileSource;
+        sourceFaction = projectileSource != null
+            ? projectileSource.GetComponent<FactionMember>()
+            : null;
         remainingLifetime = lifetime;
         isLaunched = true;
         gameObject.SetActive(true);
@@ -62,6 +66,16 @@ public sealed class Projectile : MonoBehaviour
             return;
         }
 
+        FactionMember targetFaction = targetHealth != null
+            ? targetHealth.GetComponent<FactionMember>()
+            : null;
+
+        if (sourceFaction != null && targetFaction != null &&
+            !sourceFaction.IsHostileTo(targetFaction))
+        {
+            return;
+        }
+
         if (targetHealth != null)
         {
             targetHealth.TakeDamage(damage);
@@ -74,6 +88,7 @@ public sealed class Projectile : MonoBehaviour
     {
         isLaunched = false;
         sourceHealth = null;
+        sourceFaction = null;
 
         if (owner == null)
         {

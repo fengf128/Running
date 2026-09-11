@@ -1,0 +1,3 @@
+itemId,displayName,itemType,maxStack,effectAmount
+water,矿泉水,Water,3,50
+bandage,绷带,Medical,3,15

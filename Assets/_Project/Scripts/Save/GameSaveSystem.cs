@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public sealed class GameSaveSystem : MonoBehaviour
 {
     [SerializeField] private ItemData[] knownItems;
     [SerializeField] private string saveFileName = "player-save.json";
+
+    private readonly Dictionary<string, ItemData> itemsById =
+        new Dictionary<string, ItemData>();
 
     private Health health;
     private PlayerHydration hydration;
@@ -22,6 +26,32 @@ public sealed class GameSaveSystem : MonoBehaviour
         health = GetComponent<Health>();
         hydration = GetComponent<PlayerHydration>();
         inventory = GetComponent<PlayerInventory>();
+        BuildItemIndex();
+    }
+
+    private void BuildItemIndex()
+    {
+        if (knownItems == null)
+        {
+            return;
+        }
+
+        foreach (ItemData item in knownItems)
+        {
+            if (item == null || string.IsNullOrWhiteSpace(item.ItemId))
+            {
+                Debug.LogError("Known Items contains an empty item or item ID.", this);
+                continue;
+            }
+
+            if (itemsById.ContainsKey(item.ItemId))
+            {
+                Debug.LogError($"Duplicate item ID in Known Items: {item.ItemId}", this);
+                continue;
+            }
+
+            itemsById.Add(item.ItemId, item);
+        }
     }
 
     public bool SaveGame()
@@ -152,20 +182,7 @@ public sealed class GameSaveSystem : MonoBehaviour
 
     private ItemData FindItem(string itemId)
     {
-        if (knownItems == null)
-        {
-            return null;
-        }
-
-        for (int i = 0; i < knownItems.Length; i++)
-        {
-            ItemData item = knownItems[i];
-            if (item != null && item.ItemId == itemId)
-            {
-                return item;
-            }
-        }
-
-        return null;
+        itemsById.TryGetValue(itemId, out ItemData item);
+        return item;
     }
 }

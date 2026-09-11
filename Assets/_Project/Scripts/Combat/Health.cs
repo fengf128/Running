@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 
 public sealed class Health : MonoBehaviour
 {
     [SerializeField, Min(1f)] private float maxHealth = 30f;
+
+    public event Action<float> Damaged;
+    public event Action<float> Healed;
+    public event Action<float, float> HealthChanged;
+    public event Action Died;
 
     public float MaxHealth => maxHealth;
     public float CurrentHealth { get; private set; }
@@ -11,6 +17,7 @@ public sealed class Health : MonoBehaviour
     private void Awake()
     {
         CurrentHealth = maxHealth;
+        HealthChanged?.Invoke(CurrentHealth, maxHealth);
     }
 
     public void TakeDamage(float amount)
@@ -20,10 +27,16 @@ public sealed class Health : MonoBehaviour
             return;
         }
 
+        float previousHealth = CurrentHealth;
         CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
+        float actualDamage = previousHealth - CurrentHealth;
+
+        Damaged?.Invoke(actualDamage);
+        HealthChanged?.Invoke(CurrentHealth, maxHealth);
+
         if (IsDead)
         {
-            gameObject.SetActive(false);
+            Died?.Invoke();
         }
     }
 
@@ -34,19 +47,31 @@ public sealed class Health : MonoBehaviour
             return false;
         }
 
+        float previousHealth = CurrentHealth;
         CurrentHealth = Mathf.Min(maxHealth, CurrentHealth + amount);
+        float actualHeal = CurrentHealth - previousHealth;
+
+        Healed?.Invoke(actualHeal);
+        HealthChanged?.Invoke(CurrentHealth, maxHealth);
         Debug.Log($"{name} HP: {CurrentHealth}/{maxHealth}", this);
         return true;
     }
 
     public void RestoreFromSave(float savedHealth)
     {
+        bool wasDead = IsDead;
+        float previousHealth = CurrentHealth;
         CurrentHealth = Mathf.Clamp(savedHealth, 0f, maxHealth);
         Debug.Log($"{name} HP loaded: {CurrentHealth}/{maxHealth}", this);
 
-        if (IsDead)
+        if (!Mathf.Approximately(previousHealth, CurrentHealth))
         {
-            gameObject.SetActive(false);
+            HealthChanged?.Invoke(CurrentHealth, maxHealth);
+        }
+
+        if (!wasDead && IsDead)
+        {
+            Died?.Invoke();
         }
     }
 }

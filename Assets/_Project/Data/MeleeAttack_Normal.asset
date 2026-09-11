@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa78b7fcc96f924abac58db57f32bc5, type: 3}
-  m_Name: Item_Water
+  m_Script: {fileID: 11500000, guid: a8e9c4c1264b4ed69806d5f57b23b2f4, type: 3}
+  m_Name: MeleeAttack_Normal
   m_EditorClassIdentifier: 
-  itemId: water
-  displayName: "\u77FF\u6CC9\u6C34"
-  itemType: 0
-  maxStack: 3
-  effectAmount: 50
+  damage: 10
+  cooldown: 1

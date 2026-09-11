@@ -23,29 +23,44 @@ public sealed class PlayerStatusUI : MonoBehaviour
 
     private void OnEnable()
     {
+        health.HealthChanged += HandleHealthChanged;
+
         displayedHealth = -1;
         displayedHydration = -1;
-        Refresh();
+        HandleHealthChanged(health.CurrentHealth, health.MaxHealth);
+        RefreshHydration();
+    }
+
+    private void OnDisable()
+    {
+        if (health != null)
+        {
+            health.HealthChanged -= HandleHealthChanged;
+        }
     }
 
     private void Update()
     {
-        Refresh();
+        RefreshHydration();
     }
 
-    private void Refresh()
+    private void HandleHealthChanged(float current, float max)
     {
-        int currentHealth = Mathf.CeilToInt(health.CurrentHealth);
-        int currentHydration = Mathf.CeilToInt(hydration.CurrentHydration);
+        int currentHealth = Mathf.CeilToInt(current);
 
         if (currentHealth != displayedHealth)
         {
             healthText.SetText(
                 "生命：{0}/{1}",
                 currentHealth,
-                Mathf.CeilToInt(health.MaxHealth));
+                Mathf.CeilToInt(max));
             displayedHealth = currentHealth;
         }
+    }
+
+    private void RefreshHydration()
+    {
+        int currentHydration = Mathf.CeilToInt(hydration.CurrentHydration);
 
         if (currentHydration != displayedHydration)
         {
