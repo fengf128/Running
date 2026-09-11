@@ -5,8 +5,8 @@
 ## 当前状态
 
 - 本地可演示 MVP 已完成。
-- Unity Play Mode、Windows Development Player 和 Windows Release Player 均已验证。
-- Release 全流程冒烟测试通过，无已知阻断错误。
+- 基础MVP已通过Unity Play Mode、Windows Development Player和Windows Release Player验证，Release全流程冒烟测试通过。
+- 后续新增的近战共享配置、物品ID字典读档、CSV配置导入及命中帧距离复查已通过用户Play Mode验证；不代表这些新增功能已完成新一轮Development/Release构建验证。
 
 ## 操作
 
@@ -28,6 +28,7 @@
 - 玩家与敌人共享的子弹对象池，支持池容量不足时动态扩充。
 - `IInteractable`统一交互规则，支持世界物品和撤离点使用同一条E键调用链。
 - 使用`ScriptableObject ItemData`配置的六种物品，以及六格背包、堆叠、消耗和UI刷新。
+- 编辑器菜单支持导入固定路径的物品CSV，按物品ID更新已有`ItemData`资产，保留资产GUID及已有引用。
 - 饮水、治疗、任务样本、撤离条件、失败提示、成功结算和重新开始。
 - F5/F9 JSON玩家状态存档，保存生命、饮水和背包物品ID/数量。
 - 实时生命/饮水UI、六格背包UI和中文TextMeshPro字体。
@@ -36,6 +37,7 @@
 - `TargetDummy`已接入对象池伤害飘字：按实际伤害显示3D TMP数字，完成上升和渐隐后回池复用，池不足时支持动态扩容。
 - 玩家治疗成功后由`Health.Healed`发布实际恢复量，并复用同一浮动文字对象池显示绿色`+数值`；满血治疗不通知也不消耗物品，已通过Play Mode验证。
 - `ChaserEnemy`已建立无外部角色素材的Animator占位样品：玩法根对象与`VisualRoot`分离，Idle/Chase按AI状态自动切换；`TryAttack成功 → Attacked → Trigger → Animation Event → ApplyPendingHit`已通过Play Mode验证，伤害会在动画命中帧结算。
+- 近战命中帧会复查本次保存目标的存活、激活状态与水平距离；超出命中范围则挥空，保留攻击冷却，不临时换目标。已于2026-09-11获用户Play Mode验证确认。
 - 新增`FactionMember`与`HostileTargetFinder`：阵营身份独立于Health，近战和远程AI定时使用`OverlapSphereNonAlloc`筛选最近的存活敌对目标；Dummy临时设为Player后，敌人先选Dummy、其后重新选择玩家的流程已验证。
 
 ## 主要设计
@@ -45,7 +47,9 @@
 - 背包通过`InventoryChanged`事件通知UI，背包不直接依赖具体UI组件。
 - 子弹由`Queue`对象池复用，减少高频射击中的重复创建和销毁。
 - 敌人AI负责判断何时攻击，`IEnemyAttack`统一调用入口，具体策略组件负责近战扣血或远程发射。
-- JSON只保存稳定ID和普通数值，读取时再通过Known Items把ID还原为`ItemData`资产引用。
+- `MeleeAttackData`共享配置保存伤害和冷却时长；各敌人组件独立保存下一次攻击时间和待命中目标，不把运行时状态写回共享资产。
+- JSON只保存稳定ID和普通数值；`Awake`将Known Items数组整理为`Dictionary<string, ItemData>`，读档时按ID查回已有资产引用，再恢复各槽位数量。
+- 配置导入由`MenuItem`注册菜单，按约定列解析并校验CSV；通过`AssetDatabase`查找已有资产、建立ID字典，再用`SerializedObject`修改字段并保存，不删除重建资产。
 - 状态UI先比较已显示整数，再用TMP `SetText`复用字符缓冲区，减少无效刷新和托管字符串分配。
 - `Health`只负责生命数据与规则，攻击者只请求伤害，UI、反馈和死亡后果由独立组件响应事件，避免战斗脚本直接认识具体表现。
 - 死亡样品把根对象与`VisualRoot`分开：根对象保留逻辑和碰撞职责，视觉子对象负责旋转与位移表现。
@@ -87,3 +91,4 @@
 - [设计思路与逻辑链](思路.md)
 - [Unity与C#知识整理](知识.md)
 - [复习与自测](通过项目理解.md)
+- [CSV配置导入说明](配置导入说明.md)
